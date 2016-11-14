@@ -2,7 +2,7 @@
 
 The goal of this project is to take a python Turtle graphics script, change the turtle.Turtle class and change it to a RoboTurtle, and have your script control a robot that performs the on-screen actions while the turtle screen works.  This will hopefully provide a nice reward for students learning programming, and will increase engagement during the process!
 
-This project must be run on a Raspberry Pi, and requires the zerogpio package.
+This project must be run on a Raspberry Pi, and requires the gpiozero package.
 
 ## Usage Example
 
