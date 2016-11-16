@@ -1,7 +1,6 @@
 import math
 import time
 import turtle
-import warnings
 import gpiozero
 
 class LocalTurtle(turtle.Turtle):
