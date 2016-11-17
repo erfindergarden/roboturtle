@@ -1,22 +1,16 @@
 import math
 import time
-import turtle
 import gpiozero
 
-class LocalTurtle(turtle.Turtle):
+class RoboTurtle(object):
 
     turn_speed = 1
 
     def __init__(self, *args, **kwargs):
         """
-        A Turtle that controls a CamJamRobot, using distance inputs.
-
-        Args:
-          -robot (CamJamKitRobot): a robot that Turtle should control.
-              If None, Turtle will make an instance itself.
+        A turtle.Turtle for controlling a CamJamRobot, using distance inputs.
         """
 
-        super(LocalTurtle, self).__init__(*args, **kwargs)
         self.robot = gpiozero.CamJamKitRobot()
         self.speed = 0.1
         self.scale = 0.1
@@ -30,8 +24,6 @@ class LocalTurtle(turtle.Turtle):
     def forward(self, dist):
         if dist < 0:
             self.backward(-dist)
-        print('Moving forward {} units...'.format(dist))
-        super(LocalTurtle, self).forward(dist)
         self._dist_to_time(self.robot.forward, dist)
 
     fd = forward
@@ -39,8 +31,6 @@ class LocalTurtle(turtle.Turtle):
     def backward(self, dist):
         if dist < 0:
             self.forward(-dist)
-        print('Moving backward {} units...'.format(dist))
-        super(LocalTurtle, self).backward(dist)
         self._dist_to_time(self.robot.backward, dist)
 
     bk = backward
@@ -54,8 +44,6 @@ class LocalTurtle(turtle.Turtle):
     def left(self, degrees):
         if degrees < 0:
             return self.right(-degrees)
-        print('Turning left {} degrees...')
-        super(LocalTurtle, self).left(degrees)
         self._degrees_to_time(self.robot.left, degrees)
 
     lt = left
@@ -63,8 +51,6 @@ class LocalTurtle(turtle.Turtle):
     def right(self, degrees):
         if degrees < 0:
             return self.left(-degrees)
-        print('Turning right {} degrees...')
-        super(LocalTurtle, self).left(degrees)
         self._degrees_to_time(self.robot.right, degrees)
 
     rt = right
