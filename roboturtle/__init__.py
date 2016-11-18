@@ -1,6 +1,6 @@
 import warnings
 
-from .clientturtle import ClientTurtle
+from .client import EchoClient
 from .serverturtle import Server, get_server_socket
 
 try:
