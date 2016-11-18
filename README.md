@@ -52,7 +52,7 @@ On your computer:
 from turtle import Turtle
 from roboturtle import EchoClient
 
-client = EchoClient(ip="sever's_ip_address", port=8000)
+client = EchoClient(ip="server's_ip_address", port=8000)
 
 alex = turtle.Turtle()
 client.bind(alex)  # This will modify the turtle so it automatically sends the commands on the client.
