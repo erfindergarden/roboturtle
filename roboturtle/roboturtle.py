@@ -1,62 +1,67 @@
 import math
 import time
+from turtle import Vec2D
+
 import gpiozero
+
 
 class RoboTurtle(object):
 
-    turn_speed = 1
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, robot=None, turn_speed=1.0, move_speed=1.0, time_offset=0., *args, **kwargs):
         """
         A turtle.Turtle for controlling a CamJamRobot, using distance inputs.
         """
 
-        self.robot = gpiozero.CamJamKitRobot()
-        self.speed = 0.1
-        self.scale = 0.1
-
-    def _dist_to_time(self, move_fun, dist):
-        """converts a turtle movement distance to the robot's speed and timing commands"""
-        move_fun()
-        time.sleep(dist * self.scale)
-        self.robot.stop()
+        self.robot = gpiozero.CamJamKitRobot() if not robot else robot
+        self.turn_speed = turn_speed  # In full revolutions (360 degrees) per second
+        self.move_speed = move_speed
+        self.time_offset = time_offset
+        self._heading_vec = Vec2D(1., 0.)
+        self._current_coords = Vec2D(0., 0.)
 
     def forward(self, dist):
-        if dist < 0:
-            self.backward(-dist)
-        self._dist_to_time(self.robot.forward, dist)
-
-    fd = forward
+        """Move a robot forward some distance"""
+        self.robot.forward(self.move_speed)
+        self._current_coords += self._heading_vec * dist
+        time.sleep(dist / self.move_speed) + self.time_offset
+        self.robot.stop()
 
     def backward(self, dist):
-        if dist < 0:
-            self.forward(-dist)
-        self._dist_to_time(self.robot.backward, dist)
+        return self.forward(-dist)
 
+    fd = forward
     bk = backward
     back = backward
 
-    def _degrees_to_time(self, turn_fun, degrees):
-        turn_fun(self.turn_speed)
-        time.sleep(3)  # TODO: Figure out relationship between speed, time, and degrees
+    def left(self, degrees):
+        self.robot.left(1.)  # To simplify the model, always turn at maximum speed.
+        self._heading_vec = self._heading_vec.rotate(degrees)
+        time.sleep(self.turn_speed / float(degrees)) + self.time_offset
         self.robot.stop()
 
-    def left(self, degrees):
-        if degrees < 0:
-            return self.right(-degrees)
-        self._degrees_to_time(self.robot.left, degrees)
+    def right(self, degrees):
+        return self.left(-degrees)
 
     lt = left
-
-    def right(self, degrees):
-        if degrees < 0:
-            return self.left(-degrees)
-        self._degrees_to_time(self.robot.right, degrees)
-
     rt = right
 
+    def heading(self):
+        angle = math.atan2(*self._heading_vec[::-1])
+        angle = math.degrees(angle)
+        return angle
+
+    def xcor(self):
+        return self._current_coords[0]
+
+    def ycor(self):
+        return self._current_coords[1]
+
+    def distance(self, x, y):
+        """Returns the robot's distance to coordinates (x, y)."""
+        return abs(self._current_coords - Vec2D(x, y))
+
     def goto(self, x, y=None):
-        """Goes to specified coordinates"""
+        """Goes to specified coordinates (x, y), leaving final heading unchanged."""
         if isinstance(y, type(None)):
             x, y = x
         x_old, y_old = self.heading()
@@ -74,7 +79,7 @@ class RoboTurtle(object):
 
     def sety(self, y):
         """Go to y position, leaving x position unchanged"""
-        self.goto(self.scor(), y)
+        self.goto(self.xcor(), y)
 
     def setheading(self, to_angle):
         """Turn to a specific heading angle, in degrees"""
