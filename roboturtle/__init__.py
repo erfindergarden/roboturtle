@@ -1,7 +1,7 @@
 import warnings
 
 from .client import EchoClient
-from .serverturtle import Server, get_server_socket
+from .server import EchoServer
 
 try:
     import gpiozero
