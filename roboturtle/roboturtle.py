@@ -2,8 +2,6 @@ import math
 import time
 from turtle import Vec2D
 
-import gpiozero
-
 
 class RoboTurtle(object):
 
@@ -11,8 +9,12 @@ class RoboTurtle(object):
         """
         A turtle.Turtle for controlling a CamJamRobot, using distance inputs.
         """
+        if robot:
+            self.robot = robot
+        else:
+            import gpiozero
+            self.robot = gpiozero.CamJamKitRobot() if not robot else robot
 
-        self.robot = gpiozero.CamJamKitRobot() if not robot else robot
         self.turn_speed = turn_speed  # In full revolutions (360 degrees) per second
         self.move_speed = move_speed
         self.time_offset = time_offset
