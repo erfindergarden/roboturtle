@@ -8,5 +8,12 @@ setup(
     license='',
     author='Nicholas A. Del Grosso',
     author_email='delgrosso.nick@gmail.com',
-    description=''
+    description='',
+    requires=['warnings', 'pyglet'],
+    entry_points={
+        'gui_scripts':
+            [
+                'roborotate=roboturtle.rotation_timing'  # TODO: Fix entry point so it installs correctly.
+            ]
+    },
 )
