@@ -51,10 +51,3 @@ class EchoServer(object):
 
             # Execute JSON command on target
             getattr(target, command[0])(*command[1])
-
-
-
-
-
-
-
