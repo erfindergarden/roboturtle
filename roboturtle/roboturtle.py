@@ -1,6 +1,6 @@
 import math
 import time
-from turtle import Vec2D
+from turtle import Vec2D, Turtle
 
 
 class RoboTurtle(object):
@@ -20,6 +20,12 @@ class RoboTurtle(object):
         self.time_offset = time_offset
         self._heading_vec = Vec2D(1., 0.)
         self._current_coords = Vec2D(0., 0.)
+
+    def __getattr__(self, item):
+        if item in Turtle:
+            raise NotImplementedError("{} not yet implemented in RoboTurtle class".format(item))
+        else:
+            raise AttributeError
 
     def forward(self, dist):
         """Move a robot forward some distance"""
