@@ -3,10 +3,7 @@ import socket
 
 
 def send_through_socket(sock):
-    """
-    A decorator that encodes all commands in json (function, args, kwargs) tuples, and echos it on a socket.
-    The command's format will be semt as (function_name <str>, *args <tuple>, **kwargs <dict>)
-    """
+    """A decorator that encodes all commands in json (function, args, kwargs) tuples, and sends it on a socket before calling the command."""
     def decorator(func):
         def wrapper(*args, **kwargs):
             command = (func.__name__, args, kwargs)
@@ -34,7 +31,17 @@ class EchoClient(object):
 
     def bind(self, target):
         """Modifies a target object to send command packets."""
-        socket_sender = send_through_socket(self.sock)
-        targ_methods = [name for name in dir(target) if not callable(getattr(target, name)) or name[:2] in ['_', 'on']]
-        for name in targ_methods:
-            setattr(target, name, socket_sender(getattr(target, name)))
+
+        for name in dir(target):
+
+            # Filter out private methods and attributes
+            if name[0] == '_':
+                continue
+            if not callable(getattr(target, name)):
+                continue
+            if name[:2] == 'on':
+                continue
+
+            # Apply decorator to method
+            setattr(target, name, send_through_socket(self.sock)(getattr(target, name)))
+
