@@ -14,7 +14,7 @@ class ArrowSprite(object):
         self.x = x
         self.y = y
         self.rot = rot
-        self.rot_velocity = 150.0
+        self.rot_velocity = 0. #150.0
 
         self.verts = [(-10, 0), (10, 0), (0, 150)]
         self.vertex_list = graphics.vertex_list(
@@ -60,12 +60,14 @@ def update(dt):
 pyglet.clock.schedule(update)
 
 
-prev_time = time.time()
-
+prev_time = None
 @window.event
 def on_key_press(mod, sym):
     global prev_time
     if key.SPACE == mod:
+        if not prev_time:
+            prev_time = time.time()
+            return
         curr_time = time.time()
         new_rot_vel_estimate = 1. / (curr_time - prev_time)
         speed_histories.append(new_rot_vel_estimate)
@@ -74,5 +76,9 @@ def on_key_press(mod, sym):
         prev_time = curr_time
         speed_label.text = fmt_str.format(arrow.rot_velocity)
 
-pyglet.app.run()
+def run():
+    pyglet.app.run()
+
+if __name__ == '__main__':
+    run()
 

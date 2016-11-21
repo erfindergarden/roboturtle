@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='roboturtle',
@@ -10,10 +10,5 @@ setup(
     author_email='delgrosso.nick@gmail.com',
     description='',
     requires=['warnings', 'pyglet'],
-    entry_points={
-        'gui_scripts':
-            [
-                'roborotate=roboturtle.rotation_timing'  # TODO: Fix entry point so it installs correctly.
-            ]
-    },
+    entry_points={'gui_scripts': ['roborotate=roboturtle.rotation_timing:run']},
 )
