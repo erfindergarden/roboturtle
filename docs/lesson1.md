@@ -12,19 +12,25 @@
     - Draw Pictures
     - Control Robots
 
+
 ## Installing and Running Python
 
-Python comes built-in with Linux and Mac!  It can also be downloaded and installed from the Python Web Page https://www.python.org/downloads/
+Python comes built-in with Linux and Mac, but it's best if it's installed from the Python Web Page https://www.python.org/downloads/
 
 *Note*: The newest version of Python (Python 3) is recommended, but either version wil work for this workshop.
 
-*To Run Python*:
+*Note*: We're going to use a terminal program called **ipython** ("Interactive Python") for this course, which has a few extra features
+to make it easy to learn Python.
+
+*After Installing Python: To Run Python*:
   1. Open a terminal program:
     - Mac: Open Spotlight Search (apple+space) and type "Terminal".  This program will launch.
     - Linux: Use the Keyboard shortcut Ctrl+Alt+T, or open the program "Terminal"
     - Windows: Open the program called "Command Window" or "Powershell Terminal"
 
-  2. Run the iPython Interactive REPL (Command-Line Interface), by typing: **python** and pressing the enter key.
+  2. Install ipython by typing **pip install ipython**.  This will automatically download and install the program for you!
+
+  3. Run the iPython Interactive REPL (Command-Line Interface), by typing: **ipython** and pressing the enter key.
 
 ![Alt text](_static/img/terminal.png "Optional title")
 
@@ -118,73 +124,87 @@ He can do other things, to!  Let's take some time now and use the skills you've 
 
 ### Turtle Graphics Exercises
 
-  - Make a Triangle
-  - Make a Bigger Triangle.
-  - Clear the Screen.  (Hint: it is a function in the **turtle** module, not part of Alex.)
-  - Make a Square.
-  - Change the color of the turtle's pen.
-  - Make a second turtle, and set his starting position to (10, 20), where he should draw a triangle, too.
+  1. Make a Triangle
+  2. Make a Bigger Triangle.
+  3. Make a Square.
+  4. Change the color of the turtle's pen.
+  5. Make a second turtle, and set his starting position to (10, 20), where he should draw a triangle, too.
+  6. Clear the Screen.  (Hint: it is a function in the **turtle** module, not part of Alex.)
 
+## Saving Time with For Loops
 
-## Saving Your Code: Writing Scripts
-
-When you quit Python, all your hard work will be lost!  This is terribly sad, but if you put your code in a text file (named my_turtle_art.py), you can always run the code and the computer will make your beautiful artwork again!  Let's make a couple scripts together.
-
-(10 Minutes: Live, Joint coding session)
-
-
-# Making Your Own Functions.  
-
-Have you noticed how you keep writing the same thing, over and over again?  Have you gotten tired of it yet?  Well, Python provides a way to make your own functions, which will automatically do several steps for you--once you've made it, all you have to do is tell it to do **MyFunction()**!
-
-Here's how to write a function in Python:
+You tell Python to repeat some lines of code multiple times using the **for** statement.  Here's how to print the same command 3 times:
 
 ```python
+for num in [1, 2, 3]:
+    print(num)
+```
+Let's break that code down:
 
-def function_name():
-    step1
-    step2
-    step3
+   1. **[1, 2, 3]**: This is a *list* of numbers.  The more items in the list, the more times the code will run.
+   2. **The "for num in list:" statement**:  This tells Python that you want to repeat some code.  It also creates a new variable, called *num*.  The colon (**:**)is really important; you need it at the end of the **for** statement for it to work.
+   3. **print(num)**  This is the code that will be repeated.  *Important*: notice that there are some spaces before the code; Python needs these spaces to know that they go inside the **for** loop.
+
+
+### For-Loop Exercises
+
+  1. Print "Hello World" 3 times in a loop!
+  2. Print your name 5 times in a loop!
+  3. Use a Turtle to draw a triangle in a loop.
+  4. *Challenge:* Use a for-loop inside a for-loop to draw 5 squares, each inside another!
+
+
+## Control a RoboTurtle
+
+Let's connect to a robot and control it with Python!  We'll use our very own **roboturtle** module to connect up to some
+robots over our network and control them using the same commands that we used for **turtle**!
+
+  1. Exit ipython by typing Ctrl-D.
+  2. Install the roboturtle module:
 
 ```
+pip install roboturtle
+```
 
-That's it!  Note each part of the above code: the **def** statement, the colon (**:**), and spaces before each line under the **def** are all important.  Let's make a couple of functions:
+  3. Launch ipython again:
 
-  - Make a **triangle()** function.
-  - Make a **square()** function.
-  - Make a **triangle(size)** function that takes a **size** input, which makes bigger triangles when bigger numbers are put in them!  This hasn't been introduced, but I bet you can figure out how to do this!
+```
+ipython
+```
 
-# Making Loops
-
-## While Loops
-
-(Lesson here)
-
-## For Loops
-
-(Lesson here)
-
-
-# Tinker! 
-
-Okay, now you're free from this guided lesson!  Take the next 20 minutes to make something you like!
-
-# Control the RoboTurtle
-
-In the Erfindergarden, we have our very own RoboTurtle--he is a wonderful artist, whose life purpose is to draw your Turtle Graphics art on his canvas!  He is controlled via a tiny computer called the **Raspberry Pi**.  We'll make a Python script that controls him, so he can paint our scripts!
-
-To make your script work with the RoboTurtle, first make a copy of your script.  Then add the following at the top:
+  4. import the turtle and roboturtle modules, and connect a **turtle.Turtle** to the network by making a client, then binding it to the Turtle:
 
 ```python
 import roboturtle
+client = roboturtle.EchoClient(ip='192.100.10.10', port=8000)  # Fill in the ip and port numbers with those given by the instructor for your robot.
+
+import turtle
+alex = turtle.Turtle()  # Makes a turtle
+
+client.bind(alex)  # Connects the Turtle to the network
+alex.forward(100)  # Moves the robot!
 ```
 
-This won't work on your computer, but our Raspberry Pi has the **roboturtle** package, and it will work there.  Finally, you need to change your **alex = turtle.Turtle()** line to:
+### RoboTinker Session:
 
-```python
-alex = roboturtle.Roboturtle()
-```
+Let's do some free play with your RoboTurtle!  For some ideas:
 
-That's it!  Now your turtle has been Robo-fied!  Give your new robot script to your instructor, and he'll see how our RoboTurtle does with your art!
+  1. Make your RoboTurtle navigate an obstacle course!
+  2. Play football!  First Robot to score a goal wins!
+  3. Draw a Picture!  Attach a marker to the turtle and have it draw a nice picture on a large sheet of paper!
 
 
+## Wrap-Up
+
+That's it for Lesson 1! By now, you should be getting comfortable with typing commands in Python, and have some ideas of what Python can do!
+In this lesson, we've covered:
+
+  - Installing Python on your Machine  (From the website)
+  - Variable Assignment and Math Operators (x = 3 + 2)
+  - Installing and Importing Python Modules (pip install roboturtle, import roboturtle)
+  - Object Instantiation (alex = turtle.Turtle())
+  - Function- and Method-calling (math.sqrt(16), alex.forward(100))
+  - For-Loops (for side in [1, 2, 3]:)
+
+Please review this material at home--next time, we'll learn how to do even more, including writing our own functions,
+and even our own programs!
