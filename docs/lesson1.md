@@ -89,6 +89,8 @@ To see a list of all the functions available in the math module, type:
 dir(math)
 ```
 
+In iPython, you can also use the **<<Tab>>** key to see a list of options.  Try typing **math.**, and then pressing Tab!
+
 To read what a function does, use the **help** function, like so:
 
 ```python
