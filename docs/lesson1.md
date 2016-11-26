@@ -1,6 +1,15 @@
-# Micro-Workshop 1: Learning Python with Turtle Graphics
+# Micro-Workshop 1: Introduction to Python with Turtle Graphics
 
-*Lesson Goals*:
+## Workshop Description
+
+**Duration**: 45-60 Minutes
+
+**Target Audience**: Complete Beginners, ages 8-80
+
+**Recommended Class Size**: Flexible, accomodates any size class, although best if at least every pair of students has a robot
+to themselves for experimentation at the end.
+
+**Learning Goals**:
 
   - Become familiar with Python's main syntax, including:
     - Variable Assignment and Operators
