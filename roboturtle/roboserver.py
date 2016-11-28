@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from roboturtle import EchoServer, RoboTurtle
 import turtle
 import click
