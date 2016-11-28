@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    lesson1
+   lesson2
    roboturtle
 
 
