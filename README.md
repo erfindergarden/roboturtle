@@ -6,6 +6,13 @@ This project is intended to be run on a Raspberry Pi, and requires the gpiozero 
 It can also be imported on a normal computer, however, which is useful for connecting remotely
 to a Turtle via a Client-Server interface.
 
+## Workshop Exercises and Full Documentation
+
+This readme contains a short summary of the project.  For all documentation associated with the project, including all
+workshop summaries intended to be used with the project, see our ReadTheDocs page:
+
+http://roboturtle.readthedocs.io/en/latest/
+
 ## Installation
 
 Download the source code, and then use the setup.py file to install the roboturtle package:
